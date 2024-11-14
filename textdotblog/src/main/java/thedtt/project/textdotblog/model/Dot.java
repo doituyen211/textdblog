@@ -5,8 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import thedtt.project.textdotblog.enums.DotStatus;
+import thedtt.project.textdotblog.enums.DotType;
 
 import java.time.Instant;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,10 +22,9 @@ public class Dot {
     @Column(name = "dot_id", nullable = false)
     private Integer id;
 
-    @NotNull
-    @Lob
-    @Column(name = "dot_type", nullable = false)
-    private String dotType;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "dot_type")
+    private DotType dotType;
 
     @NotNull
     @Lob
@@ -32,10 +35,9 @@ public class Dot {
     @Column(name = "output_text")
     private String outputText;
 
-    @ColumnDefault("'pending'")
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private String status;
+    private DotStatus status = DotStatus.PENDING;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
@@ -43,5 +45,8 @@ public class Dot {
 
     @Column(name = "completed_at")
     private Instant completedAt;
+
+    @OneToMany(mappedBy = "dot")
+    private Set<DotUseHistory> dotUseHistories = new LinkedHashSet<>();
 
 }

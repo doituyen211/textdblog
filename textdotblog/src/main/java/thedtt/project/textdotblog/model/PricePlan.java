@@ -1,10 +1,12 @@
 package thedtt.project.textdotblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import thedtt.project.textdotblog.enums.AiSupportLevel;
 
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
@@ -36,9 +38,9 @@ public class PricePlan {
     @Column(name = "yearly_cost", precision = 10, scale = 2)
     private BigDecimal yearlyCost;
 
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "ai_support_level")
-    private String aiSupportLevel;
+    private AiSupportLevel aiSupportLevel;
 
     @Column(name = "content_rewrite")
     private Boolean contentRewrite;
@@ -59,9 +61,11 @@ public class PricePlan {
     private Integer maxPostsPerMonth;
 
     @OneToMany(mappedBy = "plan")
+    @JsonIgnore
     private Set<Payment> payments = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "plan")
+    @JsonIgnore
     private Set<UserPlanSubscription> userPlanSubscriptions = new LinkedHashSet<>();
 
 }

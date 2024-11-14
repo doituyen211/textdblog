@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import thedtt.project.textdotblog.enums.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -38,9 +39,8 @@ public class Payment {
     @Column(name = "payment_date")
     private Instant paymentDate;
 
-    @ColumnDefault("'completed'")
-    @Lob
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_status")
-    private String paymentStatus;
+    private PaymentStatus paymentStatus = PaymentStatus.COMPLETED;
 
 }
