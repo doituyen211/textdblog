@@ -9,7 +9,7 @@ import thedtt.project.textdotblog.services.implement.PricePlanService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/price-plan")
+@RequestMapping("/api/textdblog/price-plan")
 public class PricePlanController {
 
     private final PricePlanService pricePlanService;
@@ -17,6 +17,11 @@ public class PricePlanController {
     @GetMapping
     public ApiResponse<?> getPricePlan() {
        return pricePlanService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<?> getPricePlanById(@PathVariable int id) {
+        return pricePlanService.getById(id);
     }
 
     @PostMapping("/add/new")

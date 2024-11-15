@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import thedtt.project.textdotblog.enums.DotStatus;
+import thedtt.project.textdotblog.enums.Role;
 
 import java.time.Instant;
 import java.util.LinkedHashSet;
@@ -42,6 +44,10 @@ public class User {
 
     @Column(name = "last_login")
     private Instant lastLogin;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
     @OneToMany(mappedBy = "user")
     private Set<Payment> payments = new LinkedHashSet<>();
